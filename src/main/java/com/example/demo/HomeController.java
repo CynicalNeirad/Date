@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 @Controller
@@ -32,10 +33,11 @@ public class HomeController {
     }
 
     @RequestMapping("/history")
-    public String searchHistory(Model model, Authentication authentication){
+    public String searchHistory(Model model, Authentication authentication) {
         AppUser user = appUserRepository.findAppUserByUsername(authentication.getName());
         model.addAttribute("users", dateRepository.findAllByDateUser(user));
-        return "searchHistory";}
+        return "searchHistory";
+    }
 
     @GetMapping("/getdate")
     public String addItem(Model model) {
@@ -52,33 +54,14 @@ public class HomeController {
         } else {
             Calendar c = Calendar.getInstance();
             c.setTime(appDate.getInputDate());
-            int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-            if (dayOfWeek == 1) {
-                appDate.setmName("Kwesi");
-                appDate.setfName("Akosua");
-            } else if (dayOfWeek == 2) {
-                appDate.setmName("Kojo");
-                appDate.setfName("Adjoa");
-            } else if (dayOfWeek == 3) {
-                appDate.setmName("Kwabena");
-                appDate.setfName("Abena");
-            } else if (dayOfWeek == 4) {
-                appDate.setmName("Kweku");
-                appDate.setfName("Akua");
-            } else if (dayOfWeek == 5) {
-                appDate.setmName("Yaw");
-                appDate.setfName("Yaa");
-            } else if (dayOfWeek == 6) {
-                appDate.setmName("Kofi");
-                appDate.setfName("Afua");
-            } else {
-                appDate.setmName("Kwame");
-                appDate.setfName("Ama");
-            }
+            appDate.setmName(c.get(Calendar.DAY_OF_WEEK));
+            appDate.setfName(c.get(Calendar.DAY_OF_WEEK));
+            appDate.setZodiac(c.get(Calendar.YEAR) % 12);
             appDate.addUser(appUserRepository.findAppUserByUsername(authentication.getName()));
             dateRepository.save(appDate);
             model.addAttribute("date", appDate);
             return "output";
+
         }
     }
 }
