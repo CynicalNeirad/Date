@@ -18,6 +18,8 @@
             <th>Date</th>
             <th>Female Name</th>
             <th>Male Name</th>
+            <th>Animal</th>
+            <th>Sign</th>
             <th>User</th>
 
         </tr>
@@ -30,6 +32,12 @@
             <td th:text="${date.fName}"></td>
 
             <td th:text="${date.mName}"></td>
+
+            <td th:text="${date.zodiac}"></td>
+
+            <td th:text="${date.wZodiac}"></td>
+
+
 
             <div th:each="person : ${date.dateUser}">
                 <td th:text="${person.username}"></td>

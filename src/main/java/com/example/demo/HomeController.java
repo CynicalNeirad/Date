@@ -57,6 +57,7 @@ public class HomeController {
             appDate.setmName(c.get(Calendar.DAY_OF_WEEK));
             appDate.setfName(c.get(Calendar.DAY_OF_WEEK));
             appDate.setZodiac(c.get(Calendar.YEAR) % 12);
+            appDate.setwZodiac(c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
             appDate.addUser(appUserRepository.findAppUserByUsername(authentication.getName()));
             dateRepository.save(appDate);
             model.addAttribute("date", appDate);
